@@ -90,27 +90,14 @@ private:
 
 
 public:
-  ground(SDL_Surface* window_surface_ptr)
-      : 
-      window_surface_ptr_{window_surface_ptr} {}; // todo: Ctor
+  ground(SDL_Surface* window_surface_ptr); // todo: Ctor
 
-  ~ground() {
-    SDL_FreeSurface(window_surface_ptr_);
-  }; // todo: Dtor, again for clean up (if necessary)
+  ~ground(); // todo: Dtor, again for clean up (if necessary)
 
-  void add_animal(animal* animal)
-  {
-      animals.push_back(animal);
-  }; // todo: Add an animal
+  void add_animal(animal* animal);
 
 
-  void update(){
-    for (int i = 0; i<animals.size();i++) {
-    animals.at(i)->move();
-      animals.at(i)->draw();
-      
-    }
-  }; // todo: "refresh the screen": Move animals and draw them
+  void update(); // todo: "refresh the screen": Move animals and draw them
   // Possibly other methods, depends on your implementation
 };
 

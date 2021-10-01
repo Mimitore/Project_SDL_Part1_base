@@ -42,20 +42,15 @@ animal::animal(const std::string& file_path, SDL_Surface* window_surface_ptr)
 
         window_surface_ptr_{window_surface_ptr},
         image_ptr_{IMG_Load(file_path.c_str())}, position_{0, 0, 100, 100} {};
-  // todo: The constructor has to load the sdl_surface that corresponds to the
-  // texture
 
   animal::~animal() {
     SDL_FreeSurface(image_ptr_);
     SDL_FreeSurface(window_surface_ptr_);
-  }; // todo: Use the destructor to release memory and "clean up
-     // behind you"
+  }; 
 
   void animal::draw() {
     SDL_BlitScaled(image_ptr_, NULL, window_surface_ptr_, &position_);
-  }; // todo: Draw the animal on the screen <-> window_surface_ptr.
-     // Note that this function is not virtual, it does not depend
-     // on the static type of the instance
+  }; 
 
   void animal::move() {} // todo: Animals move around, but in a different
                            // fashion depending on which type of animal
@@ -73,7 +68,7 @@ sheep::sheep(SDL_Surface* window_surface_ptr)
     SDL_FreeSurface(image_ptr_);
 
   }
-  // implement functions that are purely virtual in base class
+
   void sheep::move() 
   { 
     SDL_BlitScaled(image_ptr_, NULL, window_surface_ptr_, &position_);
@@ -82,3 +77,25 @@ sheep::sheep(SDL_Surface* window_surface_ptr)
     
   }
   void sheep::draw() { animal::draw(); }
+
+
+
+  
+ground::ground(SDL_Surface* window_surface_ptr)
+        : window_surface_ptr_{window_surface_ptr} {}; 
+
+    ground::~ground() {
+      SDL_FreeSurface(window_surface_ptr_);
+    }; 
+
+    void ground::add_animal(animal* animal) {
+      animals.push_back(animal);
+    }; 
+
+    void ground::update() {
+      for (int i = 0; i < animals.size(); i++) {
+        animals.at(i)->move();
+        animals.at(i)->draw();
+      }
+    }; 
+ 
