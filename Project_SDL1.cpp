@@ -59,3 +59,26 @@ animal::animal(const std::string& file_path, SDL_Surface* window_surface_ptr)
 
   void animal::move() {} // todo: Animals move around, but in a different
                            // fashion depending on which type of animal
+
+
+sheep::sheep(SDL_Surface* window_surface_ptr)
+      : 
+      window_surface_ptr_{window_surface_ptr},
+      image_ptr_{IMG_Load("Images/MOUTON.png")},
+      animal{"Images/MOUTON.png",window_surface_ptr}
+        {};
+
+  sheep::~sheep() { 
+    SDL_FreeSurface(window_surface_ptr_);
+    SDL_FreeSurface(image_ptr_);
+
+  }
+  // implement functions that are purely virtual in base class
+  void sheep::move() 
+  { 
+    SDL_BlitScaled(image_ptr_, NULL, window_surface_ptr_, &position_);
+    position_.x += 2;
+    position_.y += 2;
+    
+  }
+  void sheep::draw() { animal::draw(); }

@@ -59,29 +59,14 @@ private:
 
 public:
   // Ctor
-  sheep(SDL_Surface* window_surface_ptr)
-      : 
-      window_surface_ptr_{window_surface_ptr},
-      image_ptr_{IMG_Load("Images/MOUTON.png")},
-      animal{"Images/MOUTON.png",window_surface_ptr}
-        {};
+  sheep(SDL_Surface* window_surface_ptr);
 
 
   // Dtor
-  ~sheep() { 
-    SDL_FreeSurface(window_surface_ptr_);
-    SDL_FreeSurface(image_ptr_);
-
-  }
+  ~sheep();
   // implement functions that are purely virtual in base class
-  void move() 
-  { 
-    SDL_BlitScaled(image_ptr_, NULL, window_surface_ptr_, &position_);
-    position_.x += 2;
-    position_.y += 2;
-    
-  }
-  void draw() { animal::draw(); }
+  void move();
+  void draw();
 
 };
 
@@ -92,6 +77,8 @@ public:
 
 // The "ground" on which all the animals live (like the std::vector
 // in the zoo example).
+
+
 class ground {
 private:
   // Attention, NON-OWNING ptr, again to the screen
