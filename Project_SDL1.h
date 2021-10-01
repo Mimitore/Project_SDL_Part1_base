@@ -113,52 +113,12 @@ private:
   ground ground_app_;
 
 public:
-  application(unsigned n_sheep, unsigned n_wolf)
-      : window_ptr_{SDL_CreateWindow("SDL Window", SDL_WINDOWPOS_UNDEFINED,
-                                     SDL_WINDOWPOS_UNDEFINED, frame_width,
-                                     frame_height,
-                                     SDL_WINDOW_OPENGL)},
-       window_surface_ptr_{SDL_GetWindowSurface(window_ptr_)}, 
-       window_event_{},
-       ground_app_{ground(window_surface_ptr_)}
-      //, 
-       //n_sheep_{n_sheep}
-      {}; // Ctor
+  application(unsigned n_sheep, unsigned n_wolf); // Ctor
 
 
-  ~application() {
-    SDL_DestroyWindow(window_ptr_);
-    SDL_FreeSurface(window_surface_ptr_);
-  };    // dtor
+  ~application();    // dtor
 
-  int loop(unsigned period) {
-    SDL_FillRect(window_surface_ptr_, NULL, 888);
-
-    //for (int i = 0; i < n_sheep_; i++) {
-      sheep Sheep1 = sheep(window_surface_ptr_);
-      ground_app_.add_animal(&Sheep1);
-    //}
-
-    int current_time=SDL_GetTicks();
-    int last_time;
-    while (current_time <period) 
-    {
-      last_time = SDL_GetTicks();
-      std::cout << "last_time: "<< last_time << std::endl;
-
-      SDL_FillRect(window_surface_ptr_, NULL, 888);
-      ground_app_.update();
-      current_time = SDL_GetTicks();
-      int sleep = 50 - (current_time - last_time);
-      SDL_Delay(sleep);
-      SDL_UpdateWindowSurface(window_ptr_);
-    }
-
-
-    SDL_DestroyWindow(window_ptr_);
-    SDL_Quit();
-    return 0;
-  }; // main loop of the application.
+  int loop(unsigned period) ; // main loop of the application.
                              // this ensures that the screen is updated
                              // at the correct rate.
                              // See SDL_GetTicks() and SDL_Delay() to enforce a
