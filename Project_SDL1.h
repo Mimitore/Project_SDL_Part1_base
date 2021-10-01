@@ -33,26 +33,14 @@ protected:
   SDL_Rect position_;
 
 public:
-  animal(const std::string& file_path, SDL_Surface* window_surface_ptr):
-
-      window_surface_ptr_{window_surface_ptr},
-      image_ptr_{IMG_Load(file_path.c_str())},
-      position_{0,0,100,100}
-  {};
+  animal(const std::string& file_path, SDL_Surface* window_surface_ptr);
   // todo: The constructor has to load the sdl_surface that corresponds to the
   // texture
 
-  ~animal()
-  {
-    SDL_FreeSurface(image_ptr_);
-    SDL_FreeSurface(window_surface_ptr_);
-  }; // todo: Use the destructor to release memory and "clean up
+  ~animal(); // todo: Use the destructor to release memory and "clean up
                // behind you"
 
-  void draw(){
-    SDL_BlitScaled(image_ptr_, NULL, window_surface_ptr_,
-                   &position_);
-  }; // todo: Draw the animal on the screen <-> window_surface_ptr.
+  void draw(); // todo: Draw the animal on the screen <-> window_surface_ptr.
                  // Note that this function is not virtual, it does not depend
                  // on the static type of the instance
 
