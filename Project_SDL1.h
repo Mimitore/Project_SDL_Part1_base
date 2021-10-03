@@ -34,7 +34,7 @@ protected:
   SDL_Rect position_;
 
   //to define the value of the direction
-  int directionValue_[2];
+  int directionValue_[2] = {-1, 1};
   int directionX_;
   int directionY_;
 
