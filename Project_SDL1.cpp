@@ -39,10 +39,14 @@ SDL_Surface* load_surface_for(const std::string& path,
 
 //Animal
 animal::animal(const std::string& file_path, SDL_Surface* window_surface_ptr)
-      :
-
+      : 
         window_surface_ptr_{window_surface_ptr},
-        image_ptr_{IMG_Load(file_path.c_str())}, position_{0, 0, 100, 100} {};
+        image_ptr_{IMG_Load(file_path.c_str())}, 
+         position_{rand() % frame_width, rand() % frame_height, 100, 100},
+        directionValue_{(-1, 1)}, 
+        directionX_{directionValue_[rand()%1]},
+      directionY_{directionValue_[rand() % 1]}
+ {};
 
   animal::~animal() {
     SDL_FreeSurface(image_ptr_);
@@ -50,6 +54,7 @@ animal::animal(const std::string& file_path, SDL_Surface* window_surface_ptr)
   }; 
 
   void animal::draw() {
+    
     SDL_BlitScaled(image_ptr_, NULL, window_surface_ptr_, &position_);
   }; 
 
@@ -62,8 +67,8 @@ animal::animal(const std::string& file_path, SDL_Surface* window_surface_ptr)
 sheep::sheep(SDL_Surface* window_surface_ptr)
       : 
       window_surface_ptr_{window_surface_ptr},
-      image_ptr_{IMG_Load("Images/MOUTON.png")},
-      animal{"Images/MOUTON.png",window_surface_ptr}
+      image_ptr_{IMG_Load("media/sheep.png")},
+      animal{"media/sheep.png",window_surface_ptr}
         {};
 
   sheep::~sheep() { 
@@ -74,9 +79,17 @@ sheep::sheep(SDL_Surface* window_surface_ptr)
 
   void sheep::move() 
   { 
+
     SDL_BlitScaled(image_ptr_, NULL, window_surface_ptr_, &position_);
-    position_.x += 2;
-    position_.y += 2;
+    if (position_.x + 1 > frame_width-100 || position_.x - 1 < 0) {
+      directionX_ = -directionX_;
+    }
+    if (position_.y + 1 > frame_height-100 || position_.y - 1 < 0) {
+      directionY_ = -directionY_;
+    }
+    
+    position_.x += 4*directionX_;
+    position_.y += 4*directionY_;
     
   }
   void sheep::draw() { animal::draw(); }
@@ -97,8 +110,10 @@ void ground::add_animal(animal* animal) {
 
 void ground::update() {
     for (int i = 0; i < animals.size(); i++) {
-    animals.at(i)->move();
-    animals.at(i)->draw();
+        animals.at(i)->move();
+        animals.at(i)->draw();
+        
+    
     }
 }; 
  
@@ -120,8 +135,8 @@ application::~application() {
 
 int application::loop(unsigned period) {
 SDL_FillRect(window_surface_ptr_, NULL, 888);
-
-// for (int i = 0; i < n_sheep_; i++) {
+  srand(time(0));
+  // for (int i = 0; i < n_sheep_; i++) {
 sheep Sheep1 = sheep(window_surface_ptr_);
 ground_app_.add_animal(&Sheep1);
 //}
@@ -130,7 +145,6 @@ int current_time = SDL_GetTicks();
 int last_time;
 while (current_time < period) {
     last_time = SDL_GetTicks();
-    std::cout << "last_time: " << last_time << std::endl;
 
     SDL_FillRect(window_surface_ptr_, NULL, 888);
     ground_app_.update();

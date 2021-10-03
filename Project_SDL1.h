@@ -5,6 +5,7 @@
 
 #include <SDL.h>
 #include <SDL_image.h>
+#include <stdlib.h> 
 #include <iostream>
 #include <map>
 #include <memory>
@@ -31,6 +32,11 @@ protected:
                            // load_surface_for
   // todo: Attribute(s) to define its position
   SDL_Rect position_;
+
+  //to define the value of the direction
+  int directionValue_[2];
+  int directionX_;
+  int directionY_;
 
 public:
   animal(const std::string& file_path, SDL_Surface* window_surface_ptr);
