@@ -78,6 +78,22 @@ public:
 
 // Insert here:
 // class wolf, derived from animal
+class wolf : public animal {
+  // todo
+private:
+  SDL_Surface* window_surface_ptr_;
+  SDL_Surface* image_ptr_;
+
+public:
+  // Ctor
+  wolf(SDL_Surface* window_surface_ptr);
+
+  // Dtor
+  ~wolf();
+  // implement functions that are purely virtual in base class
+  void move();
+  void draw();
+};
 // Use only sheep at first. Once the application works
 // for sheep you can add the wolves
 
@@ -115,6 +131,7 @@ private:
   SDL_Surface* window_surface_ptr_;
   SDL_Event window_event_;
   unsigned n_sheep_;
+  unsigned n_wolf_;
   // Other attributes here, for example an instance of ground
   ground ground_app_;
 
