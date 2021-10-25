@@ -52,6 +52,8 @@ public:
 
   virtual void move() = 0; // todo: Animals move around, but in a different
                              // fashion depending on which type of animal
+  int getX();
+  int getY();
 };
 
 // Insert here:
@@ -108,7 +110,7 @@ private:
 
   // Some attribute to store all the wolves and sheep
   // here
-  std::vector<animal*> animals;
+  std::vector<animal*> animals_;
 
 
 public:
@@ -121,6 +123,7 @@ public:
 
   void update(); // todo: "refresh the screen": Move animals and draw them
   // Possibly other methods, depends on your implementation
+
 };
 
 // The application class, which is in charge of generating the window

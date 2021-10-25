@@ -59,6 +59,8 @@ animal::animal(const std::string& file_path, SDL_Surface* window_surface_ptr)
 
   void animal::move() {} // todo: Animals move around, but in a different
                            // fashion depending on which type of animal
+  int animal::getX() { return position_.x; };
+  int animal::getY() { return position_.y; };
 
 
 
@@ -128,19 +130,31 @@ ground::~ground() {
 }; 
 
 void ground::add_animal(animal* animal) {
-    animals.push_back(animal);
+    animals_.push_back(animal);
 }; 
 
 void ground::update() {
-    for (int i = 0; i < animals.size(); i++) {
-        animals.at(i)->draw();
-        animals.at(i)->move();
-        
-        
-    
+  for (const auto& a : animals_) {
+    int xA = a->getX();
+    int yA = a->getY();
+    for (const auto& b : animals_) {
+      if (a == b)
+        continue;
+      int xB = b->getX();
+      int yB = b->getY();
+      int dx = xB - xA;
+      int dy = yB - yA;
+      int distance = sqrt(dx * dx + dy * dy);
+      if (distance < 3)
+        std::cout << "yo" << std::endl;
+    }
+  }
+
+    for (int i = 0; i < animals_.size(); i++) {
+        animals_.at(i)->draw();
+        animals_.at(i)->move();
     }
 }; 
- 
 
 application::application(unsigned n_sheep, unsigned n_wolf)
           : window_ptr_{SDL_CreateWindow("SDL Window", SDL_WINDOWPOS_UNDEFINED,
